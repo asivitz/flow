@@ -8,7 +8,7 @@
  *
  *)
 
-let hh_counter_next a = 0
+external hh_counter_next : unit -> int = "hh_counter_next"
 
 type t = int
 
