@@ -267,7 +267,7 @@ static void init_shared_globals(char* mem) {
                     global_size_b + page_size +
                       2 * DEP_SIZE_B + HASHTBL_SIZE_B,
                     MEM_COMMIT, PAGE_READWRITE)) {
-    win32_maperr(GetLastError());
+    //win32_maperr(GetLastError());
     uerror("VirtualAlloc2", Nothing);
   }
 #endif
@@ -412,11 +412,11 @@ value hh_shared_init(
     shared_mem_size >> 32, shared_mem_size & ((1ll << 32) - 1),
     NULL);
   if (handle == NULL) {
-    win32_maperr(GetLastError());
+    //win32_maperr(GetLastError());
     uerror("CreateFileMapping", Nothing);
   }
   if (!SetHandleInformation(handle, HANDLE_FLAG_INHERIT, HANDLE_FLAG_INHERIT)) {
-    win32_maperr(GetLastError());
+    //win32_maperr(GetLastError());
     uerror("SetHandleInformation", Nothing);
   }
   shared_mem = MapViewOfFileEx(
@@ -427,7 +427,7 @@ value hh_shared_init(
     (char *)SHARED_MEM_INIT);
   if (shared_mem != (char *)SHARED_MEM_INIT) {
     shared_mem = NULL;
-    win32_maperr(GetLastError());
+    //win32_maperr(GetLastError());
     uerror("MapViewOfFileEx", Nothing);
   }
 
@@ -928,7 +928,7 @@ static char* hh_alloc(size_t size) {
   char* chunk       = __sync_fetch_and_add(heap, slot_size);
 #ifdef _WIN32
   if (!VirtualAlloc(chunk, slot_size, MEM_COMMIT, PAGE_READWRITE)) {
-    win32_maperr(GetLastError());
+    //win32_maperr(GetLastError());
     uerror("VirtualAlloc1", Nothing);
   }
 #endif

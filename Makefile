@@ -32,6 +32,9 @@ ifeq ($(OS), Darwin)
   FRAMEWORKS=CoreServices CoreFoundation
   SECTCREATE=-cclib -sectcreate -cclib __text -cclib flowlib -cclib $(abspath $(FLOWLIB))
 endif
+ifeq ($(OS), CYGWIN_NT-6.3)
+  ELF=elf
+endif
 
 ################################################################################
 #                                 Definitions                                  #
@@ -49,8 +52,8 @@ MODULES=\
   src/typing\
   hack/deps\
   hack/dfind\
-  hack/globals\
   hack/heap\
+  hack/globals\
   hack/parsing\
   hack/procs\
   hack/search\
@@ -62,8 +65,9 @@ MODULES=\
   hack/$(INOTIFY)\
   hack/$(FSNOTIFY)
 
+  #hack/$(INOTIFY_STUBS)\
+
 NATIVE_OBJECT_FILES=\
-  hack/$(INOTIFY_STUBS)\
   hack/heap/hh_shared.o\
   hack/hhi/hhi_elf.o\
   hack/utils/files.o\
@@ -80,7 +84,8 @@ OCAML_LIBRARIES=\
   str
 
 NATIVE_LIBRARIES=\
-  $(ELF)
+  $(ELF)\
+  advapi32
 
 FILES_TO_COPY=\
   $(wildcard lib/*.js)
@@ -89,7 +94,7 @@ FILES_TO_COPY=\
 #                                    Rules                                     #
 ################################################################################
 
-CC_FLAGS=-DNO_LZ4
+CC_FLAGS=-DNO_LZ4 -D_WIN32
 CC_OPTS=$(foreach flag, $(CC_FLAGS), -ccopt $(flag))
 INCLUDE_OPTS=$(foreach dir,$(MODULES),-I $(dir))
 LIB_OPTS=$(foreach lib,$(OCAML_LIBRARIES),-lib $(lib))

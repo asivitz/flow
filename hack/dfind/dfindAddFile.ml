@@ -109,7 +109,7 @@ and add_watch links env path =
   | Some watch -> add_file links env path
 
 and add_fsnotify_watch env path =
-  return (Fsnotify.add_watch env.fsnotify path)
+  return None
 
 and add_new_file links env path =
   let time = Time.get() in

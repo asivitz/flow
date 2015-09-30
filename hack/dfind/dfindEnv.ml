@@ -41,7 +41,7 @@ end)
 
 type t = {
     (* The fsnotify environment, we use this for interacting with fsnotify  *)
-            fsnotify  : Fsnotify.env                          ;
+            fsnotify  : string                         ;
 
     (* The set of files with their timestamp *)
     mutable files     : TimeFiles.t                           ;
@@ -60,9 +60,8 @@ type t = {
 (*****************************************************************************)
 
 let make roots =
-  let fsnotify = Fsnotify.init roots in
   {
-    fsnotify  = fsnotify          ;
+    fsnotify  = ""          ;
     files     = TimeFiles.empty   ;
     new_files = SSet.empty        ;
     dirs      = SMap.empty        ;

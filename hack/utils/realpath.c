@@ -15,6 +15,11 @@
 #include <limits.h>
 #include <stdlib.h>
 
+#ifndef _WIN32
+#else
+#include <windows.h>
+#endif
+
 #define Val_none Val_int(0)
 
 static value
@@ -33,7 +38,7 @@ hh_realpath(value v) {
 #ifndef _WIN32
   char output[PATH_MAX];
 #else
-  char output[_MAX_PATH];
+  char output[MAX_PATH];
 #endif
   char *result;
 
@@ -43,7 +48,8 @@ hh_realpath(value v) {
 #ifndef _WIN32
   result = realpath(input, output);
 #else
-  result = _fullpath(output, input, _MAX_PATH);
+  //result = _fullpath(output, input, MAX_PATH);
+  result = realpath(input, output);
 #endif
   if (result == NULL) {
     CAMLreturn(Val_none);
