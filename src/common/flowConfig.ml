@@ -591,7 +591,6 @@ let get root =
       cache := Some config;
       config
   | Some config ->
-      assert (root = config.root);
       config
 
 let get_unsafe () =
