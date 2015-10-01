@@ -74,7 +74,7 @@ let escape_spaces = Str.global_replace (Str.regexp " ") "\\ "
 let make_next_files_and_symlinks ~path_filter ~realpath_filter paths =
   let escaped_paths = List.map escape_spaces paths in
   let paths_str = String.concat " " escaped_paths in
-  let ic = Unix.open_process_in ("find "^paths_str) in
+  let ic = Unix.open_process_in ("cygfind "^paths_str) in
   let done_ = ref false in
   (* This is subtle, but to optimize latency, we open the process and
    * then return a closure immediately. That way 'find' gets started

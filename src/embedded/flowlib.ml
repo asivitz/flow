@@ -13,7 +13,7 @@ external get_embedded_flowlib_data : string -> string option =
 
 let touch_root r =
   let r = Path.to_string r in
-  ignore (Unix.system ("find \"" ^ r ^ "\" -name \"*.js\" -exec touch '{}' ';'"))
+  ignore (Unix.system ("cygfind \"" ^ r ^ "\" -name \"*.js\" -exec touch '{}' ';'"))
 
 (* There are several verify-use race conditions here (and in Hack's file
  * handling in general, really). Running the server as root is likely to be a

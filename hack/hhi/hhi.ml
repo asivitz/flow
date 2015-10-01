@@ -16,7 +16,7 @@ let root = ref None
 
 let touch_root r =
   let r = Filename.quote (Path.to_string r) in
-  ignore (Unix.system ("find " ^ r ^ " -name '*.hhi' -exec touch '{}' ';'"))
+  ignore (Unix.system ("cygfind " ^ r ^ " -name '*.hhi' -exec touch '{}' ';'"))
 
 let touch () =
   match !root with
